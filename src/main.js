@@ -1,10 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store';
-import 'bootstrap/dist/css/bootstrap.css'
+// Importing required modules and components
+import { createApp } from 'vue';
+import App from './App.vue';
+import store from './store'; // Vuex store
+import router from './router.js'; // Vue router
 
-const app = createApp(App); // Define the app
-app.use(router); // Use the router
-app.use(store); // Use the store
-app.mount('#app'); // Mount the app to the '#app' element
+// Creating a Vue application instance
+const app = createApp(App)
+
+// Registering Vuex store and Vue Router with the application
+app.use(store)
+app.use(router)
+
+// Mounting the application to an HTML element with id 'app'
+app.mount('#app')

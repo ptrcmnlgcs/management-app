@@ -1,46 +1,71 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginPage from '../components/LoginPage.vue';
-import RegisterPage from '../components/RegisterPage.vue';
-import HomePage from '../components/HomePage.vue';
 
-import AddProduct from '../components/AddProduct.vue';
-import EditProduct from '../components/EditProduct.vue';
-import ProductList from '../components/ProductList.vue';
-import UserManagement from '../components/UserManagement.vue';
+import ProductList from './components/ProductList.vue';
+import ProductDetails from './components/ProductDetails.vue';
+import AddProduct from './components/AddProduct.vue';
+import EditProduct from './components/EditProduct.vue';
+import LoginPage from './components/LoginPage.vue';
+import RegisterPage from './components/RegisterPage.vue';
+import ManageUsers from './components/ManageUsers.vue'; // Import the ManageUsers component
 
 const routes = [
-  { path: '/', component: LoginPage, name: 'login' },
-  { path: '/register', component: RegisterPage, name: 'register' },
   {
-    path: '/home', component: HomePage, name: 'home',
-    beforeEnter: (to, from, next) => {
-      // check if user is logged in and redirect to login page if not
-      if (localStorage.getItem('token')) {
-        next();
-      } else {
-        next('/');
-      }
-    }
-  },
-  {
-    path: '/logout',
-    name: 'logout',
+    path: '/',
+    name: 'LoginPage',
     component: LoginPage,
-    beforeEnter: (to, from, next) => {
-      console.log('logout');
-      localStorage.removeItem('token');
-      next('/');
-    }
+    meta: { public: true }
   },
-  { path: '/products', name: 'ProductList', component: ProductList },
-  { path: '/add-product', name: 'AddProduct', component: AddProduct },
-  { path: '/edit-product/:id', name: 'EditProduct', component: EditProduct, props: true },
-  { path: '/user-management', name: 'UserManagement', component: UserManagement },
+  {
+    path: '/register',
+    name: 'RegisterPage',
+    component: RegisterPage,
+    meta: { public: true }
+  },
+  {
+    path: '/product-list',
+    name: 'ProductList',
+    component: ProductList,
+    meta: { public: false }
+  },
+  {
+    path: '/product/:id',
+    name: 'ProductDetails',
+    component: ProductDetails,
+    meta: { public: false }
+  },
+  {
+    path: '/add-product',
+    name: 'AddProduct',
+    component: AddProduct,
+    meta: { public: false }
+  },
+  {
+    path: '/edit-product/:id',
+    name: 'EditProduct',
+    component: EditProduct,
+    meta: { public: false }
+  },
+  {
+    path: '/manage-users', // Route for managing users
+    name: 'ManageUsers',
+    component: ManageUsers,
+    meta: { public: false }
+  }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  history: createWebHistory(),
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('token');
+
+  if (!to.meta.public && !isAuthenticated) {
+    next({ name: 'Login' });
+  } else {
+    next();
+  }
 });
 
 export default router;

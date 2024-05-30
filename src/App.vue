@@ -1,20 +1,31 @@
 <template>
-  <!-- the router view is where all the routes are rendered -->
-  <router-view/>
+  <!-- Importing and using Navbar component -->
+  <Navbar />
+  <div id="app"> <!--just like you'd place your toys on that mat to play, Vue sets up and displays its components inside this <div>--> 
+    <!-- Insertion point for views based on the current route -->
+    <!-- When navigating to different URLs, different content will be displayed here -->
+    <router-view/>
+  </div>
 </template>
 
 <script>
+// Importing Navbar component
+import Navbar from './components/Navbar.vue';
+
 export default {
+  // Registering Navbar component
+  components: {
+    Navbar,
+  },
+  // Name of the root component
   name: 'App',
-  data() {
-    return {
-      // assign in root component to easily change the api url in production environment
-      // it can be access using this.$root.$data.apiUrl in any component
-      apiUrl : 'http://127.0.0.1:8000/api'      
-    }
-  }
 }
 </script>
 
+
 <style>
+#app {
+  text-align: center;
+  margin-top: 60px;
+}
 </style>
