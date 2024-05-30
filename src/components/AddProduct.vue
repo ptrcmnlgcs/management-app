@@ -1,20 +1,22 @@
 <template>
   <div>
     <h1>Add Product</h1>
-    <form @submit.prevent="addProduct">
+    <form @submit.prevent="submitForm">
       <div>
-        <label for="name">Product Name:</label>
-        <input type="text" id="name" v-model="name" placeholder="Product Name" />
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="product.name" required>
       </div>
       <div>
-        <label for="description">Product Description:</label>
-        <textarea id="description" v-model="description" placeholder="Product Description"></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" v-model="product.description"></textarea>
       </div>
       <div>
-        <label for="price">Product Price:</label>
-        <input type="number" id="price" v-model="price" placeholder="Product Price" />
+        <label for="price">Price:</label>
+        <input type="number" id="price" v-model.number="product.price" required>
       </div>
-      <button type="submit">Add</button>
+      <div>
+        <button type="submit">Add Product</button>
+      </div>
     </form>
   </div>
 </template>
@@ -23,33 +25,24 @@
 export default {
   data() {
     return {
-      name: '',
-      description: '',
-      price: ''
+      product: {
+        name: '',
+        description: '',
+        price: null
+      }
     };
   },
   methods: {
-    async addProduct() {
-      try {
-        // Add product logic
-        const newProduct = {
-          name: this.name,
-          description: this.description,
-          price: this.price
-        };
-        this.$emit('productAdded', newProduct); // Emit event to parent component with the new product data
-        // Clear input fields after submission
-        this.name = '';
-        this.description = '';
-        this.price = '';
-      } catch (error) {
-        console.error('Error adding product:', error);
-      }
+    submitForm() {
+      // Simulate adding product by logging to console
+      console.log('Product added:', this.product);
+      // Redirect back to product list with added product data
+      this.$router.push({ name: 'ProductList', params: { newProduct: this.product } });
     }
   }
 };
 </script>
 
-<style>
-/* Add your styles here */
+<style scoped>
+/* Add styling as needed */
 </style>

@@ -1,81 +1,53 @@
 <template>
   <div>
     <h1>Product List</h1>
-    <table v-if="products && products.length">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.price }}</td>
-          <td>
-            <router-link :to="{ name: 'EditProduct', params: { id: product.id } }">Edit</router-link>
-            <button @click="deleteProduct(product.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p v-else>No products available</p>
+    <ul>
+      <li v-for="product in productList" :key="product.id">
+        <h2>{{ product.name }}</h2>
+        <p>Description: {{ product.description }}</p>
+        <p>Price: {{ product.price }}</p>
+        <button @click="editProduct(product)">Edit</button>
+        <button @click="deleteProduct(product.id)">Delete</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import { ref, onUnmounted } from 'vue';
-import axios from 'axios';
+import axios from 'axios'; // Import Axios
 
 export default {
-  setup() {
-    const products = ref([]);
-
-    const fetchProductList = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/products');
-        products.value = response.data;
-      } catch (error) {
-        console.error('Error fetching product list:', error);
-      }
-    };
-
-    const deleteProduct = async (productId) => {
-      try {
-        await axios.delete(`http://localhost:8000/api/products/${productId}`);
-        fetchProductList();
-      } catch (error) {
-        console.error('Error deleting product:', error);
-      }
-    };
-
-    // Fetch product list on component mount
-    fetchProductList();
-
-    // Fetch product list again when 'productAdded' event is emitted
-    const handleProductAdded = () => {
-      fetchProductList();
-    };
-
-    // Listen for 'productAdded' event
-    window.addEventListener('productAdded', handleProductAdded);
-
-    // Cleanup the event listener on component unmount
-    onUnmounted(() => {
-      window.removeEventListener('productAdded', handleProductAdded);
-    });
-
+  data() {
     return {
-      products,
-      deleteProduct
-    };
+      productList: []
+    }
+  },
+  methods: {
+    fetchProducts() {
+      // Fetch products from Laravel API using Axios
+    },
+    editProduct(product) {
+      this.$router.push({ name: 'EditProduct', params: { productId: product.id } });
+    },
+    deleteProduct(productId) {
+      // Send delete request to Laravel API
+      axios.delete(`/api/products/${productId}`)
+        .then(() => {
+          console.log('Product deleted successfully');
+          // Refresh product list or perform other actions as needed
+          this.fetchProducts(); // Refresh product list
+        })
+        .catch(error => {
+          console.error('Error deleting product:', error);
+        });
+    }
+  },
+  mounted() {
+    this.fetchProducts();
   }
-};
+}
 </script>
 
-<style>
-/* Add your styles here */
+<style scoped>
+/* Add styling as needed */
 </style>
