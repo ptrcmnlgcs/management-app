@@ -57,7 +57,7 @@ export default {
         setTimeout(() => {
           this.success = false;
           this.successMessage = '';
-          this.$router.push('/');
+          this.$router.push('/product-list');
         }, 3000); // Hide success message after 3 seconds and redirect
       } catch (error) {
         console.error("An error occurred while adding the product:", error);

@@ -6,7 +6,7 @@
       <p><strong>Description:</strong> {{ product.description }}</p>
       <p><strong>Price:</strong> {{ product.price }}</p>
     </div>
-    <router-link to="/" class="back-link">Back to Product List</router-link>
+    <router-link to="/product-list" class="back-link">Back to Product List</router-link>
   </div>
 </template>
 
