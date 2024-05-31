@@ -1,107 +1,147 @@
 <template>
-  <div class="edit-product">
-    <form @submit.prevent="submitForm" class="edit-product-form">
-      <input class="input-field" v-model="product.name" placeholder="Product Name" />
-      <p v-if="errors.name" class="error">{{ errors.name }}</p>
-  
-      <input class="input-field" v-model="product.description" placeholder="Product Description" />
-      <p v-if="errors.description" class="error">{{ errors.description }}</p>
-  
-      <input class="input-field" v-model="product.price" placeholder="Product Price" />
-      <p v-if="errors.price" class="error">{{ errors.price }}</p>
-  
-      <button type="submit" class="submit-button">Update Product</button>
+  <!-- Form for registration -->
+  <div class="form-container">
+    <form @submit.prevent="register" class="register-form">
+      <!-- Name, email, and password inputs -->
+      <input type="text" v-model="name" placeholder="Name" required />
+      <input type="email" v-model="email" placeholder="Email" required />
+      <input type="password" v-model="password" placeholder="Password" required />
+      <!-- Submit button -->
+      <button type="submit">Register</button>
     </form>
+    <!-- Success message -->
+    <p v-if="successMessage" class="success">{{ successMessage }}</p>
+  </div>
+  <!-- Link to login page -->
+  <div class="login-link">
+    <p>If you already have an account, <router-link to="/login">login here</router-link>.</p>
   </div>
 </template>
-  
+
 <script>
-import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import axios from '@/axios';
-  
+import axios from '@/axios'; // Import axios instance for HTTP requests
+
 export default {
-  setup() {
-    const product = ref({ id: null, name: '', description: '', price: '' });
-    const errors = ref({});
-    
-    const route = useRoute();
-    product.value.id = route.params.id;
-    
-    const router = useRouter();
-  
-    const validateInput = () => {
-      const errorMessages = {};
-      if (!product.value.name) errorMessages.name = 'Name is required';
-      if (!product.value.description) errorMessages.description = 'Description is required';
-      if (!product.value.price || isNaN(product.value.price)) errorMessages.price = 'Price is required and must be a number';
-      return errorMessages;
+  data() {
+    return {
+      // Data model for the form inputs
+      name: "",
+      email: "",
+      password: "",
+      // Variable to hold the success message
+      successMessage: ""
     };
-  
-    const submitForm = async () => {
-      const errorMessages = validateInput();
-      if (Object.keys(errorMessages).length > 0) {
-        errors.value = errorMessages;
-        return;
-      }
-  
+  },
+  methods: {
+    async register() {
       try {
-        await axios.put(`/products/${product.value.id}`, product.value);
-        router.push('/');
+        const response = await axios.post("/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        });
+        // Display alert message
+        alert("Registration successful!");
+        // Set success message
+        this.successMessage = "Registration successful! You can now log in.";
+        // Redirect to login page after a short delay
+        setTimeout(() => {
+          this.$router.push('/login');
+        }, 2000); // 2-second delay before redirecting
       } catch (error) {
-        console.error("An error occurred while updating the product:", error);
-        if (error.response && error.response.status === 422) {
-          errors.value = error.response.data.errors;
+        console.error("An error occurred:", error);
+        if (error.response) {
+          console.error('Error details:', error.response.data);
         }
       }
-    };
-  
-    onMounted(async () => {
-      try {
-        const response = await axios.get(`/products/${product.value.id}`);
-        product.value.name = response.data.name;
-        product.value.description = response.data.description;
-        product.value.price = response.data.price;
-      } catch (error) {
-        console.error("An error occurred while fetching the product:", error);
-      }
-    });
-  
-    return { product, submitForm, errors };
+    }
   }
 };
 </script>
 
 <style scoped>
-.error {
-  color: red;
-}
-.edit-product {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+/* Styling for the outer form container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.input-field {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 1em;
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.submit-button {
-  padding: 10px 20px;
-  background-color: #FF9800;
+/* Styling for the registration form layout and appearance */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 320px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.register-form:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Shared styling for input fields and register button inside the form */
+.register-form input, .register-form button {
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Specific styling for the register button */
+.register-form button {
+  background-color: #007BFF;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.submit-button:hover {
-  background-color: #e68a00;
+.register-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Styling for the success message */
+.success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Styling for the login link */
+.login-link {
+  margin-top: 20px;
+}
+
+.login-link p {
+  color: #007BFF;
+}
+
+.login-link p a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.login-link p a:hover {
+  text-decoration: underline;
 }
 </style>
