@@ -54,7 +54,7 @@ export default {
           this.$store.commit('LOGIN');
 
           // Navigate to the home page after successful login
-          this.$router.push('/');
+          this.$router.push('/product-list');
         }
       } catch (error) {
         // Display error message if login credentials do not match

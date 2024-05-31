@@ -11,7 +11,7 @@ import ManageUsers from './components/ManageUsers.vue'; // Import the ManageUser
 const routes = [
   {
     path: '/',
-    name: 'LoginPage',
+    name: 'Login',
     component: LoginPage,
     meta: { public: true }
   },
