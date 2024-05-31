@@ -45,7 +45,7 @@ export default {
 
       try {
         await axios.put(`/products/${product.value.id}`, product.value);
-        router.push('/');
+        router.push('/product-list');
       } catch (error) {
         console.error("An error occurred while updating the product:", error);
         if (error.response && error.response.status === 422) {
