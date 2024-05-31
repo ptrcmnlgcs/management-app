@@ -1,17 +1,27 @@
 <template>
   <div class="product-list">
-    <ul>
-      <li class="product-item" v-for="product in products" :key="product.id">
-        <span class="product-name">{{ product.name }}</span>
-        <span class="product-description">{{ product.description }}</span>
-        <span class="product-price">{{ product.price }}</span>
-        <div class="action-links">
-          <router-link class="edit-link" :to="{ name: 'EditProduct', params: { id: product.id } }">Edit</router-link>
-          <router-link class="details-link" :to="{ name: 'ProductDetails', params: { id: product.id } }">View Details</router-link>
-          <button class="delete-button" @click="deleteProduct(product.id)">Delete</button>
-        </div>
-      </li>
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in products" :key="product.id">
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }}</td>
+          <td>
+            <router-link :to="{ name: 'EditProduct', params: { id: product.id } }" class="btn btn-warning">Edit</router-link>
+            <router-link :to="{ name: 'ProductDetails', params: { id: product.id } }" class="btn btn-primary">View Details</router-link>
+            <button @click="deleteProduct(product.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -54,40 +64,46 @@ export default {
   border-radius: 8px;
 }
 
-.product-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.product-name,
-.product-description,
-.product-price {
-  margin: 0 10px;
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
 
-.action-links {
-  display: flex;
-  gap: 10px;
+.table th {
+  background-color: #f2f2f2;
 }
 
-.edit-link,
-.details-link,
-.delete-button {
-  padding: 5px 10px;
-  background-color: #FF9800;
-  color: white;
+.btn {
+  padding: 8px 12px;
+  margin-right: 8px; /* Add space between buttons */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none; /* Remove underline */
 }
 
-.edit-link:hover,
-.details-link:hover,
-.delete-button:hover {
-  background-color: #e68a00;
+.btn-warning {
+  background-color: #FF9800;
+  color: #fff;
 }
+
+.btn-primary {
+  background-color: #FF9800;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #FF9800;
+  color: #fff;
+}
+
+
+
 </style>
