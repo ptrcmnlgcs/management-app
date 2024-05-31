@@ -1,10 +1,11 @@
 <template>
   <div>
-    <!-- Use a router-link or a button to navigate to the Add User page -->
+    <!-- Navigation to Add User Page -->
     <router-link :to="'/add-user'">
       <button>Add User</button>
     </router-link>
 
+    <!-- Table to display users -->
     <table>
       <thead>
         <tr>
@@ -15,32 +16,50 @@
         </tr>
       </thead>
       <tbody>
+        <!-- Sample row, repeat for each user -->
         <tr>
           <td></td>
           <td></td>
           <td></td>
           <td>
-            <!-- Use a router-link to navigate to the Edit User page -->
+            <!-- Navigation to Edit User Page -->
             <router-link :to="'/edit-user'">
               <button>Edit</button>
             </router-link>
-            <!-- Use a regular button for actions like Delete -->
+            <!-- Delete button -->
             <button>Delete</button>
           </td>
         </tr>
-        <!-- Repeat rows for other users -->
       </tbody>
     </table>
-    <!-- Ensure the UserForm component is imported and rendered -->
-    <UserForm/>
+
+    <!-- UserForm component for adding/editing users -->
+    <UserForm />
   </div>
 </template>
 
 <script>
-// Import the UserForm component if needed
 
 </script>
 
 <style scoped>
-/* Add scoped styles if needed */
+/* Add scoped styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin-right: 5px;
+}
 </style>
