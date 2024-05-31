@@ -21,7 +21,7 @@
 
 <script>
 // Import axios instance for HTTP requests
-import axios from '@/axios'; 
+import axios from '@/axios';
 
 export default {
   data() {
@@ -71,22 +71,41 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 100px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Styling for the login form layout and appearance */
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Reduce the gap between form elements */
-  width: 300px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  gap: 15px;
+  width: 320px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.login-form:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Shared styling for input fields and login button inside the form */
 .login-form input, .login-form button {
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
@@ -97,15 +116,54 @@ export default {
   background-color: #007BFF;
   color: white;
   cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.login-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 /* Styling for the error message */
 .error {
   color: red;
+  font-weight: bold;
+  margin-top: -10px;
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Keyframes for shake animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
 }
 
 /* Styling for the register link */
 .register-link {
-  margin-top: 10px; /* Reduce the margin between the form and the register link */
+  margin-top: 20px;
+}
+
+.register-link p {
+  color: #007BFF;
+}
+
+.register-link p a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.register-link p a:hover {
+  text-decoration: underline;
 }
 </style>
