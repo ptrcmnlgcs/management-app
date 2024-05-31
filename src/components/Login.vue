@@ -1,6 +1,8 @@
 <template>
   <!-- Container for the login form -->
   <div class="form-container">
+    <!-- Title for the login form -->
+    <h1>Login</h1>
     <!-- Define the form for user login -->
     <form @submit.prevent="login" class="login-form">
       <!-- Input field for the user's email address -->
@@ -155,7 +157,7 @@ export default {
 }
 
 .register-link p {
-  color: #007BFF;
+  color: black;
 }
 
 .register-link p a {

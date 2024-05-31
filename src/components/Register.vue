@@ -1,6 +1,8 @@
 <template>
   <!-- Form for registration -->
   <div class="form-container">
+    <!-- Title for the registration form -->
+    <h1>Register</h1>
     <form @submit.prevent="register" class="register-form">
       <!-- Name, email, and password inputs -->
       <input type="text" v-model="name" placeholder="Name" required />
@@ -132,7 +134,7 @@ export default {
 }
 
 .login-link p {
-  color: #007BFF;
+  color: black;
 }
 
 .login-link p a {
