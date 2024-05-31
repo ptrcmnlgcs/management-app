@@ -3,7 +3,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Product Name</th>
           <th>Description</th>
           <th>Price</th>
           <th>Actions</th>
@@ -89,20 +89,36 @@ export default {
   text-decoration: none; /* Remove underline */
 }
 
+
 .btn-warning {
-  background-color: #FF9800;
+  background-color: #f3b353;
   color: #fff;
 }
 
 .btn-primary {
-  background-color: #FF9800;
+  background-color: #5db2f7;
   color: #fff;
 }
 
 .btn-danger {
-  background-color: #FF9800;
+  background-color: #eb5c51;
   color: #fff;
 }
+
+
+.btn-warning:hover{
+  background-color: #f5a107; /* Blue color for hover */
+  transform: scale(1.05);
+}
+.btn-primary:hover{
+  background-color: #007bff; /* Blue color for hover */
+  transform: scale(1.05);
+}
+.btn-danger:hover {
+  background-color: #f70c0c; /* Blue color for hover */
+  transform: scale(1.05);
+}
+
 
 
 
