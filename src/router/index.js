@@ -7,6 +7,8 @@ import EditProduct from './components/EditProduct.vue';
 import LoginPage from './components/LoginPage.vue';
 import RegisterPage from './components/RegisterPage.vue';
 import ManageUsers from './components/ManageUsers.vue'; // Import the ManageUsers component
+import EditUser from './components/EditUser.vue';
+import AddUser from './components/AddUser.vue';
 
 const routes = [
   {
@@ -50,7 +52,20 @@ const routes = [
     name: 'ManageUsers',
     component: ManageUsers,
     meta: { public: false }
-  }
+  },
+  {
+    path: '/edit-user', // Route for managing users
+    name: 'EditUser',
+    component: EditUser,
+    meta: { public: false }
+  },
+  {
+    path: '/add-user', // Route for managing users
+    name: 'AddUser',
+    component: AddUser,
+    meta: { public: false }
+  },
+
 ];
 
 const router = createRouter({

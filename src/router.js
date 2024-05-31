@@ -6,6 +6,9 @@ import AddProduct from './components/AddProduct.vue';
 import EditProduct from './components/EditProduct.vue';
 import Login from './components/Login.vue'; // Import the Login component
 import Register from './components/Register.vue'; // Import the Register component
+import ManageUsers from './components/ManageUsers.vue'; // Import the ManageUsers component
+import EditUser from './components/EditUser.vue';
+import AddUser from './components/AddUser.vue';
 
 const routes = [
     {
@@ -43,7 +46,25 @@ const routes = [
         name: 'Register',
         component: Register,
         meta: { public: true } // Mark this route as public
-    }
+    },
+    {
+        path: '/manage-users', // Route for managing users
+        name: 'ManageUsers',
+        component: ManageUsers,
+        meta: { public: false }
+      },
+      {
+        path: '/edit-user', // Route for managing users
+        name: 'EditUser',
+        component: EditUser,
+        meta: { public: false }
+      },
+      {
+        path: '/add-user', // Route for managing users
+        name: 'AddUser',
+        component: AddUser,
+        meta: { public: false }
+      },
 ];
 
 const router = createRouter({
