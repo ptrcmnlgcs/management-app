@@ -45,7 +45,7 @@ export default {
         alert("Registration successful!");
         // Redirect to login page
         const router = useRouter();
-        router.push('/');
+        router.push('/login');
       } 
       catch (error) {
         console.error("An error occurred:", error);
@@ -59,44 +59,88 @@ export default {
 </script>
 
 <style scoped>
+/* Styling for the outer form container */
 .form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 100px;
+  animation: fadeIn 1s ease-in-out;
 }
 
+/* Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Styling for the registration form layout and appearance */
 .register-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 300px;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+.register-form:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Shared styling for input fields and register button inside the form */
 .register-form input, .register-form button {
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
 }
 
+/* Specific styling for the register button */
 .register-form button {
   background-color: #007BFF;
   color: white;
   cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
+.register-form button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Styling for the success message */
 .success {
   color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: fadeIn 1s ease-in-out;
 }
 
+/* Styling for the login link */
 .login-link {
   margin-top: 20px;
 }
 
 .login-link p {
-  text-align: center;
+  color: #007BFF;
+}
+
+.login-link p a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.login-link p a:hover {
+  text-decoration: underline;
 }
 </style>
