@@ -9,7 +9,8 @@
     <input class="input-field" v-model="price" placeholder="Product Price" />
     <p v-if="errors.price" class="error">{{ errors.price }}</p>
 
-    <button type="submit" class="submit-button">Add Product</button>
+    <button type="submit" class="submit-button" :class="{ 'submitting': submitting }">Add Product</button>
+    <div v-if="success" class="success-message">{{ successMessage }}</div>
   </form>
 </template>
 
@@ -22,7 +23,10 @@ export default {
       name: '',
       description: '',
       price: '',
-      errors: {}
+      errors: {},
+      submitting: false,
+      success: false,
+      successMessage: ''
     };
   },
   methods: {
@@ -34,9 +38,11 @@ export default {
       return errors;
     },
     async submitForm() {
+      this.submitting = true;
       const errors = this.validateInput();
       if (Object.keys(errors).length > 0) {
         this.errors = errors;
+        this.submitting = false;
         return;
       }
       
@@ -46,47 +52,78 @@ export default {
           description: this.description,
           price: this.price
         });
-        this.$router.push('/');
+        this.success = true;
+        this.successMessage = 'Product added successfully!';
+        setTimeout(() => {
+          this.success = false;
+          this.successMessage = '';
+          this.$router.push('/');
+        }, 3000); // Hide success message after 3 seconds and redirect
       } catch (error) {
         console.error("An error occurred while adding the product:", error);
+      } finally {
+        this.submitting = false;
       }
     }
   }
 };
 </script>
 
-
-
 <style scoped>
-  .error {
+.error {
   color: red;
 }
-  .add-product-form {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+.add-product-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1em;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.submitting {
+  animation: pulse 1s infinite;
+}
+
+.success-message {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #45a049;
+  color: #000;
+  border-radius: 4px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .input-field {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    font-size: 1em;
+  50% {
+    transform: scale(1.1);
   }
-  
-  .submit-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  100% {
+    transform: scale(1);
   }
-  
-  .submit-button:hover {
-    background-color: #45a049;
-  }
-  </style>
+}
+</style>
