@@ -12,7 +12,7 @@ import AddUser from './components/AddUser.vue';
 
 const routes = [
     {
-        path: '/',
+        path: '/product-list',
         name: 'ProductList',
         component: ProductList,
         meta: { public: false } // Mark this route as private
@@ -36,7 +36,7 @@ const routes = [
         meta: { public: false } // Mark this route as private
     },
     {
-        path: '/login', // Add this route
+        path: '/', // Add this route
         name: 'Login',
         component: Login,
         meta: { public: true } // Mark this route as public

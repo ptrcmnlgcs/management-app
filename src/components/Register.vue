@@ -16,7 +16,7 @@
   </div>
   <!-- Link to login page -->
   <div class="login-link">
-    <p>If you already have an account, <router-link to="/login">login here</router-link>.</p>
+    <p>If you already have an account, <router-link to="/">login here</router-link>.</p>
   </div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
         alert("Registration successful!");
         // Redirect to login page
         const router = useRouter();
-        router.push('/login');
+        router.push('/');
       } 
       catch (error) {
         console.error("An error occurred:", error);

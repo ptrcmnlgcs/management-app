@@ -13,7 +13,7 @@ import AddUser from './components/AddUser.vue';
 const routes = [
   {
     path: '/',
-    name: 'LoginPage',
+    name: 'Login',
     component: LoginPage,
     meta: { public: true }
   },
